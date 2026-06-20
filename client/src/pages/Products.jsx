@@ -134,7 +134,7 @@ export default function Products() {
           const liveProds = await response.json();
           if (liveProds && liveProds.length > 0) {
             setProducts(liveProds);
-
+              
             // Sync active tab if initial selection is not present in fetched list
             const found = liveProds.find(p => (p.id === activeTab || p._id === activeTab));
             if (!found) {

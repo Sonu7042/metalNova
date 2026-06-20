@@ -5,6 +5,16 @@
   --site-sidebar: #ffffff;
   --site-navigation-text: #5c3321;
   --site-navigation-hover: #8c4b2b;
+  --site-header-active: #c87d55;
+  --site-header-cta: #c87d55;
+  --site-header-cta-hover: #8c4b2b;
+  --site-header-cta-text: #ffffff;
+  --site-header-border: #d6b5a5;
+  --site-header-dropdown: #ffffff;
+  --site-header-icon: #c87d55;
+  --site-header-font: 'Outfit', sans-serif;
+  --site-header-weight: 600;
+  --site-header-size: 16px;
   --site-heading: #c87d55;
   --site-subheading: #8c4b2b;
   --site-text: #5c3321;
@@ -896,16 +906,31 @@ body {
 /* Admin-managed public website theme */
 html body, html #root { background: var(--site-background); color: var(--site-text); }
 
-html #main-navbar, html #mobile-drawer {
+html :is(#main-navbar, #main-navbar-custom, #mobile-drawer, #mobile-drawer-custom) {
   background: var(--site-sidebar) !important;
-  border-color: color-mix(in srgb, var(--site-sidebar), white 22%) !important;
+  border-color: var(--site-header-border) !important;
+  font-family: var(--site-header-font) !important;
 }
 
-html #main-navbar :is(a, button, span),
-html #mobile-drawer :is(a, button, span) { color: var(--site-navigation-text) !important; }
+html :is(#main-navbar, #main-navbar-custom, #mobile-drawer, #mobile-drawer-custom) :is(a, button, span) {
+  color: var(--site-navigation-text) !important;
+  font-family: var(--site-header-font) !important;
+  font-size: var(--site-header-size) !important;
+  font-weight: var(--site-header-weight) !important;
+}
 
-html #main-navbar :is(a, button):hover,
-html #mobile-drawer :is(a, button):hover { color: var(--site-navigation-hover) !important; }
+html :is(#main-navbar, #main-navbar-custom, #mobile-drawer, #mobile-drawer-custom) :is(a, button):hover { color: var(--site-navigation-hover) !important; }
+
+html :is(#main-navbar-custom, #mobile-drawer-custom) :is(#cta-quote-nav, #cta-quote-mobile):hover {
+  background: var(--site-header-cta-hover) !important;
+  background-color: var(--site-header-cta-hover) !important;
+  border-color: var(--site-header-cta-hover) !important;
+}
+
+html :is(#main-navbar-custom, #mobile-drawer-custom) [data-active="true"] { color: var(--site-header-active) !important; }
+html :is(#main-navbar-custom, #mobile-drawer-custom) [data-active="true"] span { background: var(--site-header-active) !important; }
+html :is(#main-navbar-custom, #mobile-drawer-custom) svg { color: var(--site-header-icon) !important; }
+html #language-selector > div { background: var(--site-header-dropdown) !important; border-color: var(--site-header-border) !important; }
 
 html :is(#home-page-custom, #about-page, #products-page-custom, #product-detail-page, #certifications-page, #contact-page),
 html :is(#home-page-custom, #about-page, #products-page-custom, #product-detail-page, #certifications-page, #contact-page) section,
@@ -990,11 +1015,11 @@ html :is(#home-page-custom, #about-page, #products-page-custom, #product-detail-
 }
 
 html :is(#home-page-custom, #about-page, #products-page-custom, #product-detail-page, #certifications-page, #contact-page) :is(button[type="submit"], a[class*="bg-gradient"], button[class*="bg-gradient"], a[class*="px-"], a[class*="p-3"], .tab-active, .product-index-badge),
-html #main-navbar :is(#cta-quote-nav, #cta-quote-mobile) {
-  background: var(--site-button) !important;
-  background-color: var(--site-button) !important;
-  border-color: var(--site-button) !important;
-  color: var(--site-button-text) !important;
+html :is(#main-navbar, #main-navbar-custom, #mobile-drawer, #mobile-drawer-custom) :is(#cta-quote-nav, #cta-quote-mobile) {
+  background: var(--site-header-cta) !important;
+  background-color: var(--site-header-cta) !important;
+  border-color: var(--site-header-cta) !important;
+  color: var(--site-header-cta-text) !important;
 }
 
 html :is(#home-page-custom, #about-page, #products-page-custom, #product-detail-page, #certifications-page, #contact-page) button {
@@ -1015,8 +1040,8 @@ html :is(#home-page-custom, #about-page, #products-page-custom, #product-detail-
 
 html :is(#home-page-custom, #about-page, #products-page-custom, #product-detail-page, #certifications-page, #contact-page) :is(button[type="submit"], a[class*="bg-gradient"], button[class*="bg-gradient"], a[class*="px-"], a[class*="p-3"], .tab-active, .product-index-badge) span,
 html :is(#home-page-custom, #about-page, #products-page-custom, #product-detail-page, #certifications-page, #contact-page) button[class*="bg-"] span,
-html #main-navbar :is(#cta-quote-nav, #cta-quote-mobile) span {
-  color: var(--site-button-text) !important;
+html :is(#main-navbar, #main-navbar-custom, #mobile-drawer, #mobile-drawer-custom) :is(#cta-quote-nav, #cta-quote-mobile) span {
+  color: var(--site-header-cta-text) !important;
 }
 
 html :is(#home-page-custom, #about-page, #products-page-custom, #product-detail-page, #certifications-page, #contact-page) :is(.product-index-badge, .material-tag, [class*="rounded-full"][class*="uppercase"]) {

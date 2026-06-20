@@ -2,6 +2,8 @@ const { Category, Product, Inquiry, ThemeSettings } = require('./models');
 
 const defaultTheme = {
   sidebarColor: '#ffffff', navigationTextColor: '#5c3321', navigationHoverColor: '#8c4b2b',
+  headerActiveColor: '#c87d55', headerCtaColor: '#c87d55', headerCtaHoverColor: '#8c4b2b', headerCtaTextColor: '#ffffff',
+  headerBorderColor: '#d6b5a5', headerDropdownColor: '#ffffff', headerIconColor: '#c87d55',
   headingColor: '#c87d55', subheadingColor: '#8c4b2b', textColor: '#5c3321',
   mutedTextColor: '#64748b', linkColor: '#c87d55', iconColor: '#c87d55', accentColor: '#c87d55',
   buttonColor: '#c87d55', buttonTextColor: '#ffffff', buttonHoverColor: '#8c4b2b',
@@ -13,20 +15,24 @@ const defaultTheme = {
   successColor: '#059669', warningColor: '#d97706', errorColor: '#e11d48',
   loaderColor: '#fefefd', loaderAccentColor: '#c87d55', loaderPanelColor: '#ffffff',
   loaderTextColor: '#8c4b2b', loaderRingColor: '#c87d55', loaderTrackColor: '#f1f5f9',
-  loaderProgressColor: '#c87d55', loaderPatternColor: '#c87d55'
+  loaderProgressColor: '#c87d55', loaderPatternColor: '#c87d55',
+  headerFontFamily: 'Outfit', headerFontWeight: '600', headerFontSize: '16'
 };
 const isHexColor = (value) => typeof value === 'string' && /^#[0-9a-f]{6}$/i.test(value);
+const headerFonts = ['Outfit', 'Arial', 'Georgia', 'Trebuchet MS', 'Times New Roman'];
+const headerWeights = ['400', '500', '600', '700', '800'];
+const headerSizes = ['13', '14', '15', '16', '17', '18', '20'];
 
 exports.getTheme = async (req, res) => {
   try {
     let theme = await ThemeSettings.findOne({ key: 'website' }).lean();
-    if (theme && theme.themeVersion !== 6) {
+    if (theme && theme.themeVersion !== 8) {
       const migratedTheme = Object.fromEntries(
         Object.keys(defaultTheme).map((field) => [field, theme[field] || defaultTheme[field]])
       );
       theme = await ThemeSettings.findOneAndUpdate(
         { key: 'website' },
-        { $set: { ...migratedTheme, themeVersion: 6 } },
+        { $set: { ...migratedTheme, themeVersion: 8 } },
         { new: true }
       ).lean();
     }
@@ -38,15 +44,19 @@ exports.getTheme = async (req, res) => {
 exports.updateTheme = async (req, res) => {
   try {
     const updates = {};
-    Object.keys(defaultTheme).forEach((field) => {
+    const colorFields = Object.keys(defaultTheme).filter((field) => field.endsWith('Color'));
+    colorFields.forEach((field) => {
       if (isHexColor(req.body[field])) updates[field] = req.body[field];
     });
-    if (Object.keys(updates).length !== Object.keys(defaultTheme).length) {
-      return res.status(400).json({ error: 'All theme values must be six-digit hex colors.' });
+    if (headerFonts.includes(req.body.headerFontFamily)) updates.headerFontFamily = req.body.headerFontFamily;
+    if (headerWeights.includes(req.body.headerFontWeight)) updates.headerFontWeight = req.body.headerFontWeight;
+    if (headerSizes.includes(req.body.headerFontSize)) updates.headerFontSize = req.body.headerFontSize;
+    if (Object.keys(updates).length !== colorFields.length + 3) {
+      return res.status(400).json({ error: 'Theme colors or header font settings are invalid.' });
     }
     const theme = await ThemeSettings.findOneAndUpdate(
       { key: 'website' },
-      { $set: { ...updates, themeVersion: 6 }, $setOnInsert: { key: 'website' } },
+      { $set: { ...updates, themeVersion: 8 }, $setOnInsert: { key: 'website' } },
       { new: true, upsert: true, runValidators: true }
     );
     res.set('Cache-Control', 'no-store');

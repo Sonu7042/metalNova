@@ -445,6 +445,13 @@ export default function Admin() {
                 ['sidebarColor', 'Sidebar / Navigation Color'],
                 ['navigationTextColor', 'Navigation Font Color'],
                 ['navigationHoverColor', 'Navigation Hover Color'],
+                ['headerActiveColor', 'Header Active Link Color'],
+                ['headerCtaColor', 'Header CTA Background'],
+                ['headerCtaHoverColor', 'Header CTA Hover Color'],
+                ['headerCtaTextColor', 'Header CTA Font Color'],
+                ['headerBorderColor', 'Header Border Color'],
+                ['headerDropdownColor', 'Header Dropdown Background'],
+                ['headerIconColor', 'Header Icon Color'],
                 ['headingColor', 'Heading Font Color'],
                 ['subheadingColor', 'Labels / Subheading Color'],
                 ['textColor', 'Body Font Color'],
@@ -495,6 +502,24 @@ export default function Admin() {
                   </span>
                 </label>
               ))}
+              <label className="block p-4 rounded-2xl bg-[#0a0f18] border border-slate-800">
+                <span className="block text-sm font-bold text-slate-200 mb-3">Header Font Family</span>
+                <select value={themeForm.headerFontFamily} onChange={(e) => handleThemeChange('headerFontFamily', e.target.value)} className="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-white">
+                  {['Outfit', 'Arial', 'Georgia', 'Trebuchet MS', 'Times New Roman'].map((font) => <option key={font} value={font}>{font}</option>)}
+                </select>
+              </label>
+              <label className="block p-4 rounded-2xl bg-[#0a0f18] border border-slate-800">
+                <span className="block text-sm font-bold text-slate-200 mb-3">Header Font Weight</span>
+                <select value={themeForm.headerFontWeight} onChange={(e) => handleThemeChange('headerFontWeight', e.target.value)} className="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-white">
+                  {[['400', 'Regular'], ['500', 'Medium'], ['600', 'Semi Bold'], ['700', 'Bold'], ['800', 'Extra Bold']].map(([value, label]) => <option key={value} value={value}>{label}</option>)}
+                </select>
+              </label>
+              <label className="block p-4 rounded-2xl bg-[#0a0f18] border border-slate-800">
+                <span className="block text-sm font-bold text-slate-200 mb-3">Header Font Size</span>
+                <select value={themeForm.headerFontSize} onChange={(e) => handleThemeChange('headerFontSize', e.target.value)} className="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-white">
+                  {['13', '14', '15', '16', '17', '18', '20'].map((size) => <option key={size} value={size}>{size}px</option>)}
+                </select>
+              </label>
               <div className="flex gap-3">
                 <button type="submit" disabled={isSavingTheme} className="flex-1 py-3 bg-blue-600 hover:bg-blue-500 disabled:opacity-60 text-white font-bold uppercase tracking-wider rounded-xl">
                   {isSavingTheme ? 'Publishing...' : 'Publish Website Theme'}
@@ -504,9 +529,10 @@ export default function Admin() {
             </form>
 
             <div className="rounded-3xl overflow-hidden border border-slate-700 bg-white self-start sticky top-28">
-              <div className="p-5 flex justify-between font-extrabold" style={{ backgroundColor: themeForm.sidebarColor, color: themeForm.navigationTextColor }}>
+              <div className="p-5 flex justify-between" style={{ backgroundColor: themeForm.sidebarColor, color: themeForm.navigationTextColor, fontFamily: themeForm.headerFontFamily, fontWeight: themeForm.headerFontWeight, fontSize: `${themeForm.headerFontSize}px`, borderBottom: `1px solid ${themeForm.headerBorderColor}` }}>
                 <span>Website Navigation</span>
-                <span style={{ color: themeForm.navigationHoverColor }}>Hover Link</span>
+                <span style={{ color: themeForm.headerActiveColor }}>Active Link</span>
+                <span className="px-3 py-1 rounded-full" style={{ backgroundColor: themeForm.headerCtaColor, color: themeForm.headerCtaTextColor }}>CTA</span>
               </div>
               <div className="p-8 space-y-4" style={{ backgroundColor: themeForm.heroColor }}>
                 <span className="inline-block px-3 py-1 rounded-full text-xs font-bold" style={{ backgroundColor: themeForm.badgeColor, color: themeForm.badgeTextColor }}>Theme Badge</span>

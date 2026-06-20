@@ -8,6 +8,8 @@ export const API_BASE = configuredApi || (
 
 export const DEFAULT_THEME = {
   sidebarColor: '#ffffff', navigationTextColor: '#5c3321', navigationHoverColor: '#8c4b2b',
+  headerActiveColor: '#c87d55', headerCtaColor: '#c87d55', headerCtaHoverColor: '#8c4b2b', headerCtaTextColor: '#ffffff',
+  headerBorderColor: '#d6b5a5', headerDropdownColor: '#ffffff', headerIconColor: '#c87d55',
   headingColor: '#c87d55', subheadingColor: '#8c4b2b', textColor: '#5c3321',
   mutedTextColor: '#64748b', linkColor: '#c87d55', iconColor: '#c87d55', accentColor: '#c87d55',
   buttonColor: '#c87d55', buttonTextColor: '#ffffff', buttonHoverColor: '#8c4b2b',
@@ -19,7 +21,8 @@ export const DEFAULT_THEME = {
   successColor: '#059669', warningColor: '#d97706', errorColor: '#e11d48',
   loaderColor: '#fefefd', loaderAccentColor: '#c87d55', loaderPanelColor: '#ffffff',
   loaderTextColor: '#8c4b2b', loaderRingColor: '#c87d55', loaderTrackColor: '#f1f5f9',
-  loaderProgressColor: '#c87d55', loaderPatternColor: '#c87d55'
+  loaderProgressColor: '#c87d55', loaderPatternColor: '#c87d55',
+  headerFontFamily: 'Outfit', headerFontWeight: '600', headerFontSize: '16'
 };
 
 export const applyTheme = (theme) => {
@@ -28,6 +31,16 @@ export const applyTheme = (theme) => {
   root.style.setProperty('--site-sidebar', values.sidebarColor);
   root.style.setProperty('--site-navigation-text', values.navigationTextColor);
   root.style.setProperty('--site-navigation-hover', values.navigationHoverColor);
+  root.style.setProperty('--site-header-active', values.headerActiveColor);
+  root.style.setProperty('--site-header-cta', values.headerCtaColor);
+  root.style.setProperty('--site-header-cta-hover', values.headerCtaHoverColor);
+  root.style.setProperty('--site-header-cta-text', values.headerCtaTextColor);
+  root.style.setProperty('--site-header-border', values.headerBorderColor);
+  root.style.setProperty('--site-header-dropdown', values.headerDropdownColor);
+  root.style.setProperty('--site-header-icon', values.headerIconColor);
+  root.style.setProperty('--site-header-font', `'${values.headerFontFamily}', sans-serif`);
+  root.style.setProperty('--site-header-weight', values.headerFontWeight);
+  root.style.setProperty('--site-header-size', `${values.headerFontSize}px`);
   root.style.setProperty('--site-heading', values.headingColor);
   root.style.setProperty('--site-subheading', values.subheadingColor);
   root.style.setProperty('--site-text', values.textColor);

@@ -108,86 +108,13 @@ export default function Navbar() {
 
   return (
     <>
-      <style>{`
-        #main-navbar-custom,
-        #mobile-drawer-custom {
-          background: #ffffff !important;
-          background-color: #ffffff !important;
-          border-color: rgba(98, 102, 106, 0.2) !important;
-        }
-
-        #main-navbar-custom h1,
-        #main-navbar-custom h2,
-        #main-navbar-custom h3,
-        #main-navbar-custom h4,
-        #main-navbar-custom h5,
-        #main-navbar-custom h6,
-        #mobile-drawer-custom h1,
-        #mobile-drawer-custom h2,
-        #mobile-drawer-custom h3,
-        #mobile-drawer-custom h4,
-        #mobile-drawer-custom h5,
-        #mobile-drawer-custom h6 {
-          color: #1FD2E6 !important;
-        }
-
-        #main-navbar-custom p,
-        #main-navbar-custom li,
-        #main-navbar-custom td,
-        #main-navbar-custom label,
-        #main-navbar-custom span,
-        #main-navbar-custom strong,
-        #main-navbar-custom b,
-        #main-navbar-custom a,
-        #main-navbar-custom button,
-        #mobile-drawer-custom p,
-        #mobile-drawer-custom li,
-        #mobile-drawer-custom td,
-        #mobile-drawer-custom label,
-        #mobile-drawer-custom span,
-        #mobile-drawer-custom strong,
-        #mobile-drawer-custom b,
-        #mobile-drawer-custom a,
-        #mobile-drawer-custom button {
-          color: #62666A !important;
-        }
-
-        #cta-quote-nav,
-        #cta-quote-mobile {
-          background: #1FD2E6 !important;
-          background-color: #1FD2E6 !important;
-          color: #62666A !important;
-          border-color: #1FD2E6 !important;
-          box-shadow: none !important;
-        }
-
-        #cta-quote-nav span,
-        #cta-quote-mobile span {
-          color: #62666A !important;
-        }
-
-        #cta-quote-nav:hover,
-        #cta-quote-mobile:hover {
-          background: #19bacb !important;
-          background-color: #19bacb !important;
-          color: #62666A !important;
-          border-color: #19bacb !important;
-        }
-
-        #main-navbar-custom button:hover,
-        #main-navbar-custom a:hover,
-        #mobile-drawer-custom button:hover,
-        #mobile-drawer-custom a:hover {
-          color: #1FD2E6 !important;
-        }
-
-        #main-navbar-custom [class*="bg-brand-brand-copper"],
-        #mobile-drawer-custom [class*="bg-brand-brand-copper"] {
-          background-color: #1FD2E6 !important;
-        }
-      `}</style>
       <header
         id="main-navbar-custom"
+        style={{
+          backgroundColor: 'var(--site-sidebar)',
+          borderColor: 'var(--site-header-border)',
+          fontFamily: 'var(--site-header-font)'
+        }}
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled
           ? 'bg-white/95 backdrop-blur-md border-b border-slate-200 py-2'
           : 'bg-white py-4'
@@ -206,6 +133,7 @@ export default function Navbar() {
               {navItems.map((item) => (
                 <button
                   key={item.id}
+                  data-active={activePage === item.id}
                   id={`nav-link-${item.id}`}
                   onClick={() => handleNavClick(item.id)}
                   className={`text-[16px] font-semibold tracking-wide uppercase transition-all duration-200 relative py-1 cursor-pointer ${activePage === item.id
@@ -300,7 +228,11 @@ export default function Navbar() {
       {/* Mobile Menu Drawer (rendered outside header) */}
       <div
         id="mobile-drawer-custom"
-        style={{ backgroundColor: '#ffffff' }}
+        style={{
+          backgroundColor: 'var(--site-sidebar)',
+          borderColor: 'var(--site-header-border)',
+          fontFamily: 'var(--site-header-font)'
+        }}
         className={`md:hidden fixed inset-y-0 right-0 max-w-xs w-full border-l border-slate-200 shadow-2xl z-40 transform transition-transform duration-300 ease-in-out ${isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
           }`}
       >
@@ -320,6 +252,7 @@ export default function Navbar() {
             {navItems.map((item) => (
               <button
                 key={item.id}
+                data-active={activePage === item.id}
                 id={`nav-link-mobile-${item.id}`}
                 onClick={() => handleNavClick(item.id)}
                 className={`text-left text-base font-bold uppercase tracking-widest py-3 border-b border-slate-100 transition-colors cursor-pointer ${activePage === item.id ? 'text-brand-copper border-b-2 border-brand-copper' : 'text-brand-copper hover:text-brand-copper'
