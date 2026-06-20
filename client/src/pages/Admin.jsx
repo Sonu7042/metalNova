@@ -474,7 +474,13 @@ export default function Admin() {
                 ['warningColor', 'Warning Message Color'],
                 ['errorColor', 'Error Message Color'],
                 ['loaderColor', 'Preloader Background Color'],
-                ['loaderAccentColor', 'Preloader Accent Color']
+                ['loaderAccentColor', 'Preloader Glow Color'],
+                ['loaderPanelColor', 'Preloader Center Panel Color'],
+                ['loaderTextColor', 'Preloader Font Color'],
+                ['loaderRingColor', 'Preloader Spinner Color'],
+                ['loaderTrackColor', 'Preloader Track Background'],
+                ['loaderProgressColor', 'Preloader Progress Color'],
+                ['loaderPatternColor', 'Preloader Pattern Color']
               ].map(([field, label]) => (
                 <label key={field} className="flex items-center justify-between gap-5 p-4 rounded-2xl bg-[#0a0f18] border border-slate-800">
                   <span className="text-sm font-bold text-slate-200">{label}</span>
@@ -515,6 +521,14 @@ export default function Admin() {
               </div>
               <div className="p-5" style={{ backgroundColor: themeForm.surfaceColor, color: themeForm.textColor }}>Alternate section background</div>
               <div className="p-5" style={{ backgroundColor: themeForm.footerColor, color: themeForm.footerTextColor }}><strong style={{ color: themeForm.footerHeadingColor }}>Footer Heading</strong><br />Footer background and text</div>
+              <div className="p-8 flex flex-col items-center gap-4" style={{ backgroundColor: themeForm.loaderColor }}>
+                <div className="w-24 h-24 rounded-full border-4 flex items-center justify-center" style={{ borderColor: themeForm.loaderRingColor, backgroundColor: themeForm.loaderPanelColor, boxShadow: `0 0 24px ${themeForm.loaderAccentColor}` }}>
+                  <strong style={{ color: themeForm.loaderTextColor }}>Loader</strong>
+                </div>
+                <div className="w-40 h-2 rounded-full overflow-hidden" style={{ backgroundColor: themeForm.loaderTrackColor }}>
+                  <div className="w-2/3 h-full" style={{ backgroundColor: themeForm.loaderProgressColor }}></div>
+                </div>
+              </div>
             </div>
           </div>
         )}

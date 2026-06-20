@@ -35,6 +35,12 @@
   --site-error: #e11d48;
   --site-loader: #fefefd;
   --site-loader-accent: #c87d55;
+  --site-loader-panel: #ffffff;
+  --site-loader-text: #8c4b2b;
+  --site-loader-ring: #c87d55;
+  --site-loader-track: #f1f5f9;
+  --site-loader-progress: #c87d55;
+  --site-loader-pattern: #c87d55;
 }
 
 @theme {
@@ -1048,13 +1054,24 @@ html :is(#home-page-custom, #about-page, #products-page-custom, #product-detail-
 html :is(#home-page-custom, #about-page, #products-page-custom, #product-detail-page, #certifications-page, #contact-page) [class*="text-rose"],
 html :is(#home-page-custom, #about-page, #products-page-custom, #product-detail-page, #certifications-page, #contact-page) [class*="text-red"] { color: var(--site-error) !important; }
 
-html #site-loader { background: var(--site-loader) !important; color: var(--site-loader-accent) !important; }
-html #site-loader :is(span, p, h1, h2, h3) { color: var(--site-loader-accent) !important; }
-html #site-loader [class*="bg-gradient"] { background: var(--site-loader-accent) !important; }
-html #site-loader [class*="border-t-"] { border-top-color: var(--site-loader-accent) !important; }
-html #site-loader [class*="border-b-"] { border-bottom-color: var(--site-loader-accent) !important; }
-html #site-loader [class*="border-l-"] { border-left-color: var(--site-loader-accent) !important; }
-html #site-loader [class*="border-r-"] { border-right-color: var(--site-loader-accent) !important; }
+html #site-loader { background: var(--site-loader) !important; color: var(--site-loader-text) !important; }
+html #loader-grid {
+  background-image: linear-gradient(to right, color-mix(in srgb, var(--site-loader-pattern), transparent 92%) 1px, transparent 1px), linear-gradient(to bottom, color-mix(in srgb, var(--site-loader-pattern), transparent 92%) 1px, transparent 1px) !important;
+}
+html #loader-glow { background: radial-gradient(circle at center, color-mix(in srgb, var(--site-loader-accent), transparent 78%), transparent 55%) !important; }
+html #loader-panel {
+  background: var(--site-loader-panel) !important;
+  border-color: color-mix(in srgb, var(--site-loader-ring), transparent 55%) !important;
+  box-shadow: 0 0 24px color-mix(in srgb, var(--site-loader-accent), transparent 72%) !important;
+}
+html #site-loader :is(span, p, h1, h2, h3) {
+  color: var(--site-loader-text) !important;
+  -webkit-text-fill-color: var(--site-loader-text) !important;
+}
+html #loader-outer-ring { border-top-color: var(--site-loader-ring) !important; border-bottom-color: color-mix(in srgb, var(--site-loader-ring), transparent 70%) !important; }
+html #loader-inner-ring { border-left-color: var(--site-loader-ring) !important; border-right-color: color-mix(in srgb, var(--site-loader-ring), transparent 70%) !important; }
+html #loader-progress-track { background: var(--site-loader-track) !important; }
+html #loader-progress-fill { background: var(--site-loader-progress) !important; }
 
 html ::selection {
   background: var(--site-accent);

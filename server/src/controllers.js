@@ -200,4 +200,9 @@ exports.archiveInquiry = async (req, res) => {
   try {
     const { id } = req.params;
     const inquiry = await Inquiry.findByIdAndUpdate(id, { archived: true }, { new: true });
-    if (!inquiry) return res.status(404).json({ erro
+    if (!inquiry) return res.status(404).json({ error: 'Inquiry not found' });
+    res.json({ message: 'Inquiry archived successfully', inquiry });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};

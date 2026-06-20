@@ -17,7 +17,9 @@ export const DEFAULT_THEME = {
   tableHeaderColor: '#f2f2f0', footerColor: '#ffffff', footerTextColor: '#5c3321',
   footerHeadingColor: '#c87d55', overlayColor: '#5c3321',
   successColor: '#059669', warningColor: '#d97706', errorColor: '#e11d48',
-  loaderColor: '#fefefd', loaderAccentColor: '#c87d55'
+  loaderColor: '#fefefd', loaderAccentColor: '#c87d55', loaderPanelColor: '#ffffff',
+  loaderTextColor: '#8c4b2b', loaderRingColor: '#c87d55', loaderTrackColor: '#f1f5f9',
+  loaderProgressColor: '#c87d55', loaderPatternColor: '#c87d55'
 };
 
 export const applyTheme = (theme) => {
@@ -56,6 +58,12 @@ export const applyTheme = (theme) => {
   root.style.setProperty('--site-error', values.errorColor);
   root.style.setProperty('--site-loader', values.loaderColor);
   root.style.setProperty('--site-loader-accent', values.loaderAccentColor);
+  root.style.setProperty('--site-loader-panel', values.loaderPanelColor);
+  root.style.setProperty('--site-loader-text', values.loaderTextColor);
+  root.style.setProperty('--site-loader-ring', values.loaderRingColor);
+  root.style.setProperty('--site-loader-track', values.loaderTrackColor);
+  root.style.setProperty('--site-loader-progress', values.loaderProgressColor);
+  root.style.setProperty('--site-loader-pattern', values.loaderPatternColor);
 };
 
 export const loadStoredTheme = () => {

@@ -57,8 +57,8 @@ export default function Loader({ onFinished }) {
       `}</style>
 
       {/* Subtle mesh grid background overlay */}
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(200,125,85,0.03)_1px,transparent_1px),linear-gradient(to_bottom,rgba(200,125,85,0.03)_1px,transparent_1px)] bg-[size:40px_40px] pointer-events-none"></div>
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(200,125,85,0.08),transparent_55%)] pointer-events-none"></div>
+      <div id="loader-grid" className="absolute inset-0 bg-[size:40px_40px] pointer-events-none"></div>
+      <div id="loader-glow" className="absolute inset-0 pointer-events-none"></div>
 
       {/* Center content container */}
       <div className="relative flex flex-col items-center justify-center z-10 space-y-8">
@@ -67,13 +67,13 @@ export default function Loader({ onFinished }) {
         <div className="relative w-36 h-36 flex items-center justify-center">
 
           {/* Outer Copper Spinner */}
-          <div className="absolute inset-0 rounded-full border-2 border-transparent border-t-brand-copper border-b-brand-copper/20 animate-spin"></div>
+          <div id="loader-outer-ring" className="absolute inset-0 rounded-full border-2 border-transparent animate-spin"></div>
 
           {/* Middle Copper Dark Spinner (spinning opposite direction) */}
-          <div className="absolute inset-3 rounded-full border border-transparent border-l-brand-copper-dark border-r-brand-copper-dark/20 animate-spin-reverse"></div>
+          <div id="loader-inner-ring" className="absolute inset-3 rounded-full border border-transparent animate-spin-reverse"></div>
 
           {/* Inner Glowing Core Panel with Logo text */}
-          <div className="absolute inset-6 rounded-full bg-white border border-brand-copper-light/30 flex flex-col items-center justify-center shadow-[0_0_20px_rgba(200,125,85,0.08)]">
+          <div id="loader-panel" className="absolute inset-6 rounded-full border flex flex-col items-center justify-center">
             <span className="text-[10px] font-extrabold tracking-[0.25em] text-brand-copper-dark uppercase animate-pulse">Metal</span>
             <span className="text-gradient-copper text-[16px] font-black tracking-widest uppercase mt-0.5">Nova</span>
           </div>
@@ -98,9 +98,10 @@ export default function Loader({ onFinished }) {
           </span>
 
           {/* Progress bar track */}
-          <div className="w-48 h-[2px] bg-slate-100 rounded-full overflow-hidden border border-brand-copper-light/10">
+          <div id="loader-progress-track" className="w-48 h-[2px] rounded-full overflow-hidden">
             <div
-              className="h-full bg-gradient-to-r from-brand-copper-light via-brand-copper to-brand-copper-dark transition-all duration-75"
+              id="loader-progress-fill"
+              className="h-full transition-all duration-75"
               style={{ width: `${progress}%` }}
             ></div>
           </div>

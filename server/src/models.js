@@ -76,4 +76,13 @@ const ThemeSettingsSchema = new mongoose.Schema({
   loaderTextColor: { type: String, default: '#8c4b2b' },
   loaderRingColor: { type: String, default: '#c87d55' },
   loaderTrackColor: { type: String, default: '#f1f5f9' },
-  loaderProgressColor: { type: String, default: '#c87d
+  loaderProgressColor: { type: String, default: '#c87d55' },
+  loaderPatternColor: { type: String, default: '#c87d55' }
+}, { timestamps: true });
+
+module.exports = {
+  Category: mongoose.model('Category', CategorySchema),
+  Product: mongoose.model('Product', ProductSchema),
+  Inquiry: mongoose.model('Inquiry', InquirySchema),
+  ThemeSettings: mongoose.model('ThemeSettings', ThemeSettingsSchema)
+};
