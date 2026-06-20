@@ -129,7 +129,7 @@ export default function Products() {
   useEffect(() => {
     const fetchLiveCatalog = async () => {
       try {
-        const response = await fetch('https://metal-nova-9fae.vercel.app/api/products');
+        const response = await fetch('https://metal-nova-cyan.vercel.app/api/products');
         if (response.ok) {
           const liveProds = await response.json();
           if (liveProds && liveProds.length > 0) {

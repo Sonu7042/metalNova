@@ -3,7 +3,7 @@ const configuredApi = import.meta.env.VITE_API_BASE_URL?.replace(/\/$/, '');
 export const API_BASE = configuredApi || (
   import.meta.env.DEV
     ? 'http://localhost:5000/api'
-    : 'https://metal-nova-9fae.vercel.app/api'
+    : 'https://metal-nova-cyan.vercel.app/api'
 );
 
 export const DEFAULT_THEME = {

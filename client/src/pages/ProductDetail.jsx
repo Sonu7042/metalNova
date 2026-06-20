@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-const API_BASE = 'https://metal-nova-9fae.vercel.app/api';
+const API_BASE = 'https://metal-nova-cyan.vercel.app/api';
 
 const INITIAL_PRODUCTS = [
   {

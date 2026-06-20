@@ -39,7 +39,7 @@ export default function Contact() {
     };
 
     try {
-      const response = await fetch('https://metal-nova-9fae.vercel.app/api/inquiries', {
+      const response = await fetch('https://metal-nova-cyan.vercel.app/api/inquiries', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)
