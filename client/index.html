@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/png" href="/images/logo.png" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Metalnova | Precision Electrical Contact Rivets & Wires</title>
+  <meta name="description"
+    content="Metalnova specializes in precision manufacturing of electrical contact components: Solid, Bimetal, and Bimetal/Trimetal contact rivets, contact tips, assemblies, clad strips, and wires." />
+
+  <!-- Override Google Translate Widget Styles -->
+  <style>
+    .goog-te-banner-frame,
+    .goog-te-banner-frame.skiptranslate,
+    iframe.goog-te-banner-frame,
+    iframe.skiptranslate,
+    .goog-te-banner,
+    #goog-gt-tt,
+    .goog-te-balloon-frame,
+    .goog-tooltip,
+    .goog-tooltip:hover {
+      display: none !important;
+      visibility: hidden !important;
+    }
+
+    body {
+      top: 0px !important;
+      position: static !important;
+    }
+
+    html {
+      top: 0px !important;
+    }
+  </style>
+
+  <script type="text/javascript">
+    (function () {
+      function cleanGoogleTranslate() {
+        // Hide iframe banners
+        const frames = document.querySelectorAll('.goog-te-banner-frame, iframe[class*="goog-te-banner-frame"], .goog-te-banner');
+        frames.forEach(function (frame) {
+          frame.style.display = 'none';
+          frame.style.visibility = 'hidden';
+        });
+
+        // Reset body/html styles that Google Translate overrides
+        if (document.body && document.body.style.top !== '0px') {
+          document.body.style.top = '0px';
+        }
+        if (document.body && document.body.style.position === 'relative') {
+          document.body.style.position = 'static';
+        }
+        if (document.documentElement && document.documentElement.style.top !== '0px') {
+          document.documentElement.style.top = '0px';
+        }
+      }
+
+      // Run instantly
+      cleanGoogleTranslate();
+
+      // Run on DOM load / page load
+      window.addEventListener('DOMContentLoaded', cleanGoogleTranslate);
+      window.addEventListener('load', cleanGoogleTranslate);
+
+      // Run periodically for first 10 seconds to handle async script loads
+      var count = 0;
+      var interval = setInterval(function () {
+        cleanGoogleTranslate();
+        count++;
+        if (count > 40) {
+          clearInterval(interval);
+        }
+      }, 250);
+
+      // Observe DOM changes to catch dynamic iframe insertion
+      var observer = new MutationObserver(function () {
+        cleanGoogleTranslate();
+      });
+
+      // Wait for body to be available to start observing
+      var checkBodyInterval = setInterval(function () {
+        if (document.body) {
+          clearInterval(checkBodyInterval);
+          observer.observe(document.body, { childList: true, subtree: true });
+          observer.observe(document.documentElement, { childList: true, subtree: true });
+        }
+      }, 50);
+    })();
+  </script>
+</head>
+
+<body>
+  <div id="root"></div>
+  <div id="google_translate_element" style="display:none"></div>
+  <script type="text/javascript">
+    function googleTranslateElementInit() {
+      new google.translate.TranslateElement({
+        pageLanguage: 'en',
+        includedLanguages: 'en,fr,de,it,tr,zh-CN',
+        layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+        autoDisplay: false
+      }, 'google_translate_element');
+    }
+  </script>
+  <script type="text/javascript"
+    src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+  <script type="module" src="/src/main.jsx"></script>
+</body>
+
+</html>

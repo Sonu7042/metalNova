@@ -1,0 +1,1068 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap');
+@import "tailwindcss";
+
+:root {
+  --site-sidebar: #ffffff;
+  --site-navigation-text: #5c3321;
+  --site-navigation-hover: #8c4b2b;
+  --site-heading: #c87d55;
+  --site-subheading: #8c4b2b;
+  --site-text: #5c3321;
+  --site-muted-text: #64748b;
+  --site-link: #c87d55;
+  --site-icon: #c87d55;
+  --site-accent: #c87d55;
+  --site-button: #c87d55;
+  --site-button-text: #ffffff;
+  --site-button-hover: #8c4b2b;
+  --site-border: #d6b5a5;
+  --site-focus: #c87d55;
+  --site-badge: #f7e9e2;
+  --site-badge-text: #8c4b2b;
+  --site-background: #ffffff;
+  --site-hero: #ffffff;
+  --site-surface: #f2f2f0;
+  --site-card: #ffffff;
+  --site-input: #ffffff;
+  --site-input-text: #5c3321;
+  --site-table-header: #f2f2f0;
+  --site-footer: #ffffff;
+  --site-footer-text: #5c3321;
+  --site-footer-heading: #c87d55;
+  --site-overlay: #5c3321;
+  --site-success: #059669;
+  --site-warning: #d97706;
+  --site-error: #e11d48;
+  --site-loader: #fefefd;
+  --site-loader-accent: #c87d55;
+}
+
+@theme {
+  --font-sans: 'Outfit', sans-serif;
+
+  /* Brand Metallic & Electric Colors */
+  --color-brand-silver-light: #f8fafc;
+  --color-brand-silver: #cbd5e1;
+  --color-brand-silver-dark: #64748b;
+
+  --color-brand-copper-light: #f3c2a9;
+  --color-brand-copper: #c87d55;
+  --color-brand-copper-dark: #8c4b2b;
+
+  --color-brand-electric: #00d2ff;
+  --color-brand-electric-dark: #0066ff;
+
+
+  --color-brand-bg-dark: #080c14;
+  --color-brand-card-dark: #111827;
+  --color-brand-card-border: #1f2937;
+
+  /* Additional Premium Dark Shades */
+  --color-brand-gray-900: #0f172a;
+  --color-brand-gray-800: #1e293b;
+
+  --animate-glow-pulse: glow-pulse 3s infinite alternate;
+  --animate-float: float 6s ease-in-out infinite;
+}
+
+@keyframes glow-pulse {
+  0% {
+    box-shadow: 0 0 5px rgba(0, 210, 255, 0.2), 0 0 10px rgba(0, 210, 255, 0.1);
+  }
+
+  100% {
+    box-shadow: 0 0 15px rgba(0, 210, 255, 0.5), 0 0 25px rgba(0, 210, 255, 0.3);
+  }
+}
+
+@keyframes float {
+
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes gradient-flow {
+  0% {
+    background-position: 50% 0%;
+  }
+
+  50% {
+    background-position: 50% 100%;
+  }
+
+  100% {
+    background-position: 50% 0%;
+  }
+}
+
+.animate-gradient-flow {
+  background-size: 200% 200%;
+  animation: gradient-flow 6s ease infinite;
+}
+
+/* Premium Web Presets */
+html {
+  scroll-behavior: smooth;
+  font-family: 'Outfit', sans-serif;
+  background-color: #ffffff;
+  color: #5c3321;
+}
+
+body,
+#root {
+  background: #ffffff;
+  color: #5c3321;
+}
+
+/* Glassmorphism Classes */
+.glass-card {
+  background: rgba(17, 24, 39, 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.glass-card-hover {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.glass-card-hover:hover {
+  transform: translateY(-4px);
+  background: rgba(17, 24, 39, 0.85);
+  border-color: rgba(0, 210, 255, 0.3);
+  box-shadow: 0 10px 30px -10px rgba(0, 210, 255, 0.15);
+}
+
+.glass-card-copper-hover {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.glass-card-copper-hover:hover {
+  transform: translateY(-4px);
+  background: rgba(17, 24, 39, 0.85);
+  border-color: rgba(200, 125, 85, 0.3);
+  box-shadow: 0 10px 30px -10px rgba(200, 125, 85, 0.15);
+}
+
+/* Gradients text */
+.text-gradient-silver {
+  background: linear-gradient(135deg, #ffffff 0%, #cbd5e1 50%, #94A3B8 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.text-gradient-copper {
+  background: linear-gradient(135deg, #f3c2a9 0%, #c87d55 50%, #8c4b2b 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.text-gradient-electric {
+  /* background: linear-gradient(135deg, #00d2ff 0%, #0082ff 100%); */
+  background: linear-gradient(135deg, #f3c2a9 0%, #c87d55 50%, #8c4b2b 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Glow Borders */
+.glow-border-electric {
+  position: relative;
+}
+
+.glow-border-electric::after {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(to right, #cbd5e1, #94A3B8);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+.glow-border-copper {
+  position: relative;
+}
+
+.glow-border-copper::after {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(to right, rgba(243, 194, 169, 0.5), rgba(200, 125, 85, 0.5));
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #fefefd;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #c87d55;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #8c4b2b;
+}
+
+/* ================= ABOUT PAGE LIGHT THEME APPLIED SITE-WIDE ================= */
+#main-navbar {
+  background: rgba(255, 255, 255, 0.9) !important;
+  border-bottom: 1px solid rgba(200, 125, 85, 0.24) !important;
+  color: #5c3321 !important;
+  backdrop-filter: blur(16px);
+}
+
+#main-navbar button,
+#main-navbar a {
+  color: #5c3321 !important;
+}
+
+#main-navbar button:hover,
+#main-navbar a:hover,
+#main-navbar [class*="text-brand-copper"] {
+  color: #8c4b2b !important;
+}
+
+#main-navbar #cta-quote-nav,
+#main-navbar #cta-quote-mobile {
+  color: #ffffff !important;
+  background: linear-gradient(135deg, #c87d55, #8c4b2b) !important;
+  border-color: rgba(200, 125, 85, 0.35) !important;
+}
+
+#language-selector>button,
+#language-selector [class*="bg-brand-bg-dark"],
+#language-selector [class*="bg-brand-card-dark"] {
+  background: rgba(255, 255, 255, 0.92) !important;
+  border-color: rgba(200, 125, 85, 0.28) !important;
+  color: #5c3321 !important;
+}
+
+#mobile-drawer {
+  background: #fefefd !important;
+  border-color: rgba(200, 125, 85, 0.24) !important;
+}
+
+#mobile-drawer-overlay {
+  background: rgba(92, 51, 33, 0.28) !important;
+}
+
+#home-page,
+#products-page,
+#product-detail-page,
+#certifications-page,
+#contact-page {
+  background: #ffffff !important;
+  color: #5c3321 !important;
+}
+
+#home-page section,
+#products-page section,
+#product-detail-page section,
+#certifications-page section,
+#contact-page section,
+.theme-about-surface {
+  background: #ffffff !important;
+  color: #5c3321 !important;
+  border-color: rgba(200, 125, 85, 0.22) !important;
+}
+
+#home-page section:nth-of-type(even),
+#products-page section:nth-of-type(even),
+#product-detail-page section:nth-of-type(even),
+#certifications-page section:nth-of-type(even),
+#contact-page section:nth-of-type(even) {
+  background: #f2f2f0 !important;
+}
+
+#home-page section>[class*="absolute inset-0"],
+#products-page section>[class*="absolute inset-0"],
+#product-detail-page section>[class*="absolute inset-0"],
+#certifications-page section>[class*="absolute inset-0"],
+#contact-page section>[class*="absolute inset-0"] {
+  opacity: 1;
+}
+
+#home-page [class*="bg-[#060a12]"],
+#home-page [class*="bg-[#030712]"],
+#home-page [class*="bg-[#040810]"],
+#home-page [class*="bg-[#080c14]"],
+#home-page [class*="bg-[#0f172a]"],
+#home-page [class*="bg-[#111827]"],
+#home-page [class*="bg-slate-900"],
+#home-page [class*="bg-slate-950"],
+#products-page [class*="bg-[#060a12]"],
+#products-page [class*="bg-[#030712]"],
+#products-page [class*="bg-[#040810]"],
+#products-page [class*="bg-[#080c14]"],
+#products-page [class*="bg-[#0f172a]"],
+#products-page [class*="bg-[#111827]"],
+#products-page [class*="bg-slate-900"],
+#products-page [class*="bg-slate-950"],
+#product-detail-page [class*="bg-[#060a12]"],
+#product-detail-page [class*="bg-[#030712]"],
+#product-detail-page [class*="bg-[#040810]"],
+#product-detail-page [class*="bg-[#080c14]"],
+#product-detail-page [class*="bg-[#0f172a]"],
+#product-detail-page [class*="bg-[#111827]"],
+#product-detail-page [class*="bg-slate-900"],
+#product-detail-page [class*="bg-slate-950"],
+#certifications-page [class*="bg-[#060a12]"],
+#certifications-page [class*="bg-[#030712]"],
+#certifications-page [class*="bg-[#040810]"],
+#certifications-page [class*="bg-[#080c14]"],
+#certifications-page [class*="bg-[#0f172a]"],
+#certifications-page [class*="bg-[#111827]"],
+#certifications-page [class*="bg-slate-900"],
+#certifications-page [class*="bg-slate-950"],
+#contact-page [class*="bg-[#060a12]"],
+#contact-page [class*="bg-[#030712]"],
+#contact-page [class*="bg-[#040810]"],
+#contact-page [class*="bg-[#080c14]"],
+#contact-page [class*="bg-[#0f172a]"],
+#contact-page [class*="bg-[#111827]"],
+#contact-page [class*="bg-slate-900"],
+#contact-page [class*="bg-slate-950"] {
+  background: rgba(254, 254, 253, 0.92) !important;
+}
+
+#home-page [class*="border-slate"],
+#products-page [class*="border-slate"],
+#product-detail-page [class*="border-slate"],
+#certifications-page [class*="border-slate"],
+#contact-page [class*="border-slate"],
+#footer-section [class*="border-brand-card-border"] {
+  border-color: rgba(200, 125, 85, 0.24) !important;
+}
+
+#home-page h1,
+#home-page h2,
+#home-page h3,
+#home-page h4,
+#home-page h5,
+#products-page h1,
+#products-page h2,
+#products-page h3,
+/* #products-page h4, */
+#products-page h5,
+#product-detail-page h1,
+#product-detail-page h2,
+#product-detail-page h3,
+#product-detail-page h4,
+#product-detail-page h5,
+#certifications-page h1,
+#certifications-page h2,
+#certifications-page h3,
+#certifications-page h4,
+#certifications-page h5,
+#contact-page h1,
+#contact-page h2,
+#contact-page h3,
+#contact-page h4,
+#contact-page h5 {
+  color: #c87d55 !important;
+  font-weight: 800 !important;
+  letter-spacing: -0.01em;
+}
+
+#home-page p,
+#home-page li,
+#home-page td,
+#home-page label,
+#home-page span,
+/* #products-page p, */
+#products-page li,
+#products-page td,
+#products-page label,
+#products-page span,
+#product-detail-page p,
+#product-detail-page li,
+#product-detail-page td,
+#product-detail-page label,
+#product-detail-page span,
+#certifications-page p,
+#certifications-page li,
+#certifications-page td,
+#certifications-page label,
+#certifications-page span,
+#contact-page p,
+#contact-page li,
+#contact-page td,
+#contact-page label,
+#contact-page span {
+  color: #5c3321;
+}
+
+#home-page p,
+/* #products-page p, */
+#product-detail-page p,
+#certifications-page p,
+#contact-page p,
+#footer-section p {
+  color: #5c3321 !important;
+  font-weight: 300 !important;
+  line-height: 1.75;
+}
+
+#home-page li,
+#products-page li,
+#product-detail-page li,
+#certifications-page li,
+#contact-page li {
+  color: #5c3321 !important;
+  font-weight: 600 !important;
+}
+
+#home-page label,
+#products-page label,
+#product-detail-page label,
+#certifications-page label,
+#contact-page label {
+  color: #8c4b2b !important;
+  font-weight: 700 !important;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+#home-page [class*="uppercase"],
+/* #products-page [class*="uppercase"], */
+#product-detail-page [class*="uppercase"],
+#certifications-page [class*="uppercase"],
+#contact-page [class*="uppercase"],
+#footer-section [class*="uppercase"] {
+  color: #8c4b2b !important;
+  font-weight: 700 !important;
+}
+
+#home-page strong,
+#home-page b,
+#products-page strong,
+#products-page b,
+#product-detail-page strong,
+#product-detail-page b,
+#certifications-page strong,
+#certifications-page b,
+#contact-page strong,
+#contact-page b,
+#footer-section strong,
+#footer-section b {
+  color: #8c4b2b !important;
+  font-weight: 700 !important;
+}
+
+#home-page button,
+#home-page a,
+#products-page button,
+#products-page a,
+#product-detail-page button,
+#product-detail-page a,
+#certifications-page button,
+#certifications-page a,
+#contact-page button,
+#contact-page a,
+#footer-section button,
+#footer-section a {
+  font-weight: 700;
+}
+
+#home-page [class*="text-slate"],
+#home-page [class*="text-white"],
+#products-page [class*="text-slate"],
+#products-page [class*="text-white"],
+#product-detail-page [class*="text-slate"],
+#product-detail-page [class*="text-white"],
+#certifications-page [class*="text-slate"],
+#certifications-page [class*="text-white"],
+#contact-page [class*="text-slate"],
+#contact-page [class*="text-white"] {
+  color: #5c3321 !important;
+}
+
+#home-page [class*="text-brand-electric"],
+#products-page [class*="text-brand-electric"],
+#product-detail-page [class*="text-brand-electric"],
+#certifications-page [class*="text-brand-electric"],
+#contact-page [class*="text-brand-electric"],
+#home-page [class*="text-[#00D2FF]"],
+#products-page [class*="text-[#00D2FF]"],
+#product-detail-page [class*="text-[#00D2FF]"],
+#certifications-page [class*="text-[#00D2FF]"],
+#contact-page [class*="text-[#00D2FF]"] {
+  color: #8c4b2b !important;
+}
+
+#home-page [class*="text-brand-copper"],
+#products-page [class*="text-brand-copper"],
+#product-detail-page [class*="text-brand-copper"],
+#certifications-page [class*="text-brand-copper"],
+#contact-page [class*="text-brand-copper"] {
+  color: #c87d55 !important;
+}
+
+#home-page input,
+#home-page select,
+#home-page textarea,
+#products-page input,
+#products-page select,
+#products-page textarea,
+#product-detail-page input,
+#product-detail-page select,
+#product-detail-page textarea,
+#certifications-page input,
+#certifications-page select,
+#certifications-page textarea,
+#contact-page input,
+#contact-page select,
+#contact-page textarea {
+  background: #ffffff !important;
+  border-color: rgba(200, 125, 85, 0.32) !important;
+  color: #5c3321 !important;
+}
+
+#home-page input:focus,
+#home-page select:focus,
+#home-page textarea:focus,
+#products-page input:focus,
+#products-page select:focus,
+#products-page textarea:focus,
+#product-detail-page input:focus,
+#product-detail-page select:focus,
+#product-detail-page textarea:focus,
+#certifications-page input:focus,
+#certifications-page select:focus,
+#certifications-page textarea:focus,
+#contact-page input:focus,
+#contact-page select:focus,
+#contact-page textarea:focus {
+  border-color: #c87d55 !important;
+  box-shadow: 0 0 0 3px rgba(200, 125, 85, 0.12);
+}
+
+#home-page button,
+#home-page a,
+#products-page button,
+#products-page a,
+#product-detail-page button,
+#product-detail-page a,
+#certifications-page button,
+#certifications-page a,
+#contact-page button,
+#contact-page a {
+  border-color: rgba(200, 125, 85, 0.32);
+}
+
+#home-page button[class*="bg-gradient"],
+#home-page a[class*="bg-gradient"],
+#products-page button[class*="bg-gradient"],
+#products-page a[class*="bg-gradient"],
+#product-detail-page button[class*="bg-gradient"],
+#product-detail-page a[class*="bg-gradient"],
+#certifications-page button[class*="bg-gradient"],
+#certifications-page a[class*="bg-gradient"],
+#contact-page button[class*="bg-gradient"],
+#contact-page a[class*="bg-gradient"],
+#home-page button[type="submit"],
+#contact-page button[type="submit"],
+#product-detail-page button[type="submit"] {
+  background: linear-gradient(135deg, #c87d55, #8c4b2b) !important;
+  color: #ffffff !important;
+}
+
+#home-page button[class*="bg-gradient"] span,
+#home-page a[class*="bg-gradient"] span,
+#products-page button[class*="bg-gradient"] span,
+#products-page a[class*="bg-gradient"] span,
+#product-detail-page button[class*="bg-gradient"] span,
+#product-detail-page a[class*="bg-gradient"] span,
+#certifications-page button[class*="bg-gradient"] span,
+#certifications-page a[class*="bg-gradient"] span,
+#contact-page button[class*="bg-gradient"] span,
+#contact-page a[class*="bg-gradient"] span,
+#home-page button[type="submit"] span,
+#contact-page button[type="submit"] span,
+#product-detail-page button[type="submit"] span {
+  color: #ffffff !important;
+}
+
+#home-page table,
+#products-page table,
+#product-detail-page table,
+#certifications-page table,
+#contact-page table {
+  background: #ffffff !important;
+  color: #5c3321 !important;
+}
+
+#home-page thead tr,
+#products-page thead tr,
+#product-detail-page thead tr,
+#certifications-page thead tr,
+#contact-page thead tr {
+  background: #f2f2f0 !important;
+}
+
+#cert-modal-overlay {
+  background: rgba(92, 51, 33, 0.58) !important;
+}
+
+#cert-modal-body {
+  background: #ffffff !important;
+  border-color: rgba(200, 125, 85, 0.28) !important;
+  color: #5c3321 !important;
+}
+
+#cert-modal-body h3,
+#cert-modal-body p,
+#cert-modal-body span {
+  color: #5c3321 !important;
+}
+
+#footer-section {
+  background: #ffffff !important;
+  color: #5c3321 !important;
+  border-top: 1px solid rgba(200, 125, 85, 0.24);
+}
+
+#footer-section h3,
+#footer-section p,
+#footer-section a,
+#footer-section button,
+#footer-section span {
+  color: #5c3321 !important;
+}
+
+#footer-section a:hover,
+#footer-section button:hover {
+  color: #c87d55 !important;
+}
+
+#footer-section [class*="bg-brand-copper"] {
+  background: rgba(200, 125, 85, 0.12) !important;
+  color: #8c4b2b !important;
+  border: 1px solid rgba(200, 125, 85, 0.24);
+}
+
+/* ================= GOOGLE TRANSLATE PREMIUM CUSTOMIZATION ================= */
+/* Hide the Google Translate top bar frame */
+.goog-te-banner-frame.skiptranslate,
+.goog-te-banner-frame,
+iframe.goog-te-banner-frame,
+#goog-gt-tt {
+  display: none !important;
+  visibility: hidden !important;
+}
+
+/* Prevent Google Translate from shifting the body down */
+body {
+  top: 0px !important;
+  position: static !important;
+}
+
+/* Hide hover text highlight coloring by Google Translate */
+.goog-text-highlight {
+  background-color: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+/* Hide translate tooltips */
+.goog-tooltip,
+.goog-tooltip:hover,
+.goog-te-balloon-frame {
+  display: none !important;
+  visibility: hidden !important;
+}
+
+/* ================= CUSTOM COLOR SCHEME FOR HOME PAGE ================= */
+#home-page-custom,
+#home-page-custom section,
+#home-page-custom [class*="bg-[#"],
+#home-page-custom [class*="bg-slate"],
+#home-page-custom [class*="bg-gray"],
+#home-page-custom [class*="bg-brand"] {
+  background: #ffffff !important;
+  background-color: #ffffff !important;
+  border-color: rgba(98, 102, 106, 0.2) !important;
+}
+
+/* Make background overlays subtle on white background */
+#home-page-custom section > [class*="absolute inset-0"] {
+  opacity: 0.05 !important;
+}
+
+#home-page-custom h1,
+#home-page-custom h2,
+#home-page-custom h3,
+#home-page-custom h4,
+#home-page-custom h5,
+#home-page-custom h6 {
+  color: #023C85 !important;
+}
+
+#home-page-custom p,
+#home-page-custom li,
+#home-page-custom td,
+#home-page-custom label,
+#home-page-custom span,
+#home-page-custom strong,
+#home-page-custom b,
+#home-page-custom a {
+  color: #03045A !important;
+}
+
+/* Specific overrides for inputs, selects, and textareas */
+#home-page-custom input,
+#home-page-custom select,
+#home-page-custom textarea {
+  background: #ffffff !important;
+  color: #03045A !important;
+  border-color: rgba(98, 102, 106, 0.3) !important;
+}
+#home-page-custom input:focus,
+#home-page-custom select:focus,
+#home-page-custom textarea:focus {
+  border-color: #023C85 !important;
+  box-shadow: 0 0 0 3px rgba(31, 210, 230, 0.12) !important;
+}
+
+/* Buttons and Links */
+#home-page-custom button,
+#home-page-custom a[class*="px-"],
+#home-page-custom a[class*="p-3"],
+#home-page-custom button[class*="bg-gradient"],
+#home-page-custom a[class*="bg-gradient"],
+#home-page-custom button[type="submit"] {
+  background: #023C85 !important;
+  background-color: #023C85 !important;
+  color: white !important;
+  border-color: #023C85 !important;
+  box-shadow: none !important;
+}
+
+#home-page-custom button span,
+#home-page-custom a[class*="px-"] span,
+#home-page-custom a[class*="p-3"] span,
+#home-page-custom button[class*="bg-gradient"] span,
+#home-page-custom a[class*="bg-gradient"] span,
+#home-page-custom button[type="submit"] span {
+  /* color: #03045A !important; */
+  color: white !important;
+}
+
+#home-page-custom button:hover,
+#home-page-custom a[class*="px-"]:hover,
+#home-page-custom a[class*="p-3"]:hover,
+#home-page-custom button[class*="bg-gradient"]:hover,
+#home-page-custom a[class*="bg-gradient"]:hover,
+#home-page-custom button[type="submit"]:hover {
+  background: #023C85 !important;
+  background-color: #023C85 !important;
+  color: white !important;
+  border-color: #023C85 !important;
+}
+
+/* ================= CUSTOM COLOR SCHEME FOR PRODUCTS PAGE ================= */
+#products-page-custom,
+#products-page-custom section,
+#products-page-custom [class*="bg-[#"],
+#products-page-custom [class*="bg-slate"],
+#products-page-custom [class*="bg-gray"],
+#products-page-custom [class*="bg-brand"] {
+  background: #ffffff !important;
+  background-color: #ffffff !important;
+  border-color: rgba(1, 114, 176, 0.15) !important;
+}
+
+/* Make background overlays subtle on white background */
+#products-page-custom section > [class*="absolute inset-0"] {
+  opacity: 0.05 !important;
+}
+
+#products-page-custom h1,
+#products-page-custom h2,
+#products-page-custom h3 {
+  color: #023C85 !important;
+}
+
+#products-page-custom h4,
+#products-page-custom h5,
+#products-page-custom h6 {
+  color: #023C85 !important;
+}
+
+#products-page-custom p,
+#products-page-custom span,
+#products-page-custom li {
+  color: #334155 !important; /* Neutral dark slate for excellent readability */
+}
+
+/* Specific button styling */
+#products-page-custom button,
+#products-page-custom a {
+  font-family: 'Outfit', sans-serif !important;
+}
+
+/* Input search bar overrides */
+#products-page-custom input {
+  background: #ffffff !important;
+  color: #023C85 !important;
+  border: 1.5px solid rgba(1, 114, 176, 0.2) !important;
+  border-radius: 1rem !important;
+}
+
+#products-page-custom input:focus {
+  border-color: #0172B0 !important;
+  box-shadow: 0 0 0 4px rgba(1, 114, 176, 0.1) !important;
+}
+
+/* Tabs and pills */
+#products-page-custom .tab-active {
+  background: linear-gradient(135deg, #023C85 0%, #0172B0 100%) !important;
+  color: #ffffff !important;
+  box-shadow: 0 4px 15px rgba(2, 60, 133, 0.25) !important;
+}
+
+#products-page-custom .tab-inactive {
+  background: #ffffff !important;
+  color: #023C85 !important;
+  border: 1px solid rgba(2, 60, 133, 0.15) !important;
+}
+
+#products-page-custom .tab-inactive:hover {
+  background: #f0f7fc !important;
+  color: #0172B0 !important;
+  border-color: #0172B0 !important;
+}
+
+/* Product cards overrides */
+#products-page-custom .product-card {
+  background: #ffffff !important;
+  border: 1px solid rgba(1, 114, 176, 0.12) !important;
+  box-shadow: 0 4px 20px rgba(2, 60, 133, 0.03) !important;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+#products-page-custom .product-card:hover {
+  transform: translateY(-6px) !important;
+  border-color: rgba(1, 114, 176, 0.3) !important;
+  box-shadow: 0 20px 40px rgba(1, 114, 176, 0.1) !important;
+}
+
+#products-page-custom .product-index-badge {
+  background: linear-gradient(135deg, #023C85 0%, #0172B0 100%) !important;
+  color: #ffffff !important;
+}
+
+#products-page-custom .material-tag {
+  background: rgba(1, 114, 176, 0.05) !important;
+  color: #0172B0 !important;
+  border: 1px solid rgba(1, 114, 176, 0.1) !important;
+}
+
+#products-page-custom .specs-link {
+  color: #0172B0 !important;
+}
+
+#products-page-custom .product-card:hover .specs-link {
+  color: #023C85 !important;
+}
+
+/* Admin-managed public website theme */
+html body, html #root { background: var(--site-background); color: var(--site-text); }
+
+html #main-navbar, html #mobile-drawer {
+  background: var(--site-sidebar) !important;
+  border-color: color-mix(in srgb, var(--site-sidebar), white 22%) !important;
+}
+
+html #main-navbar :is(a, button, span),
+html #mobile-drawer :is(a, button, span) { color: var(--site-navigation-text) !important; }
+
+html #main-navbar :is(a, button):hover,
+html #mobile-drawer :is(a, button):hover { color: var(--site-navigation-hover) !important; }
+
+html :is(#home-page-custom, #about-page, #products-page-custom, #product-detail-page, #certifications-page, #contact-page),
+html :is(#home-page-custom, #about-page, #products-page-custom, #product-detail-page, #certifications-page, #contact-page) section,
+html #footer-section-custom {
+  background: var(--site-background) !important;
+  background-color: var(--site-background) !important;
+}
+
+html :is(#home-page-custom, #about-page, #products-page-custom, #product-detail-page, #certifications-page, #contact-page) section:nth-of-type(even) {
+  background: var(--site-surface) !important;
+  background-color: var(--site-surface) !important;
+}
+
+html :is(#home-page-custom, #about-page, #products-page-custom, #product-detail-page, #certifications-page, #contact-page) section:first-of-type {
+  background: var(--site-hero) !important;
+  background-color: var(--site-hero) !important;
+}
+
+html :is(#home-page-custom, #about-page, #products-page-custom, #product-detail-page, #certifications-page, #contact-page) section:nth-of-type(even) > [class*="absolute"][class*="inset-0"] {
+  background-color: var(--site-surface) !important;
+}
+
+html :is(#home-page-custom, #about-page, #products-page-custom, #product-detail-page, #certifications-page, #contact-page) div[class*="bg-gray"] {
+  background: var(--site-surface) !important;
+  background-color: var(--site-surface) !important;
+}
+
+html :is(#home-page-custom, #about-page, #products-page-custom, #product-detail-page, #certifications-page, #contact-page) :is(.product-card, .glass-card, section div[class*="rounded-2xl"][class*="border-"], section div[class*="rounded-3xl"][class*="border-"]),
+html #cert-modal-body {
+  background: var(--site-card) !important;
+  background-color: var(--site-card) !important;
+}
+
+html #footer-section-custom {
+  background: var(--site-footer) !important;
+  background-color: var(--site-footer) !important;
+}
+
+html :is(#home-page-custom, #about-page, #products-page-custom, #product-detail-page, #certifications-page, #contact-page) [class*="border-"] {
+  border-color: var(--site-border) !important;
+}
+
+html :is(#home-page-custom, #about-page, #products-page-custom, #product-detail-page, #certifications-page, #contact-page, #footer-section-custom) :is(h1, h2, h3, h4, h5, h6) {
+  color: var(--site-heading) !important;
+}
+
+html :is(#home-page-custom, #about-page, #products-page-custom, #product-detail-page, #certifications-page, #contact-page, #footer-section-custom) :is(p, li, td, label, span) {
+  color: var(--site-text) !important;
+}
+
+html :is(#home-page-custom, #about-page, #products-page-custom, #product-detail-page, #certifications-page, #contact-page) :is(label, [class*="uppercase"]) {
+  color: var(--site-subheading) !important;
+}
+
+html :is(#home-page-custom, #about-page, #products-page-custom, #product-detail-page, #certifications-page, #contact-page) :is(p, span)[class*="text-slate"],
+html :is(#home-page-custom, #about-page, #products-page-custom, #product-detail-page, #certifications-page, #contact-page) :is(p, span)[class*="text-gray"] {
+  color: var(--site-muted-text) !important;
+}
+
+html :is(#home-page-custom, #about-page, #products-page-custom, #product-detail-page, #certifications-page, #contact-page, #footer-section-custom) :is(h1, h2, h3, h4, h5, h6) span {
+  color: var(--site-heading) !important;
+}
+
+html :is(#home-page-custom, #about-page, #products-page-custom, #product-detail-page, #certifications-page, #contact-page, #footer-section-custom) a {
+  color: var(--site-link) !important;
+}
+
+html :is(#home-page-custom, #about-page, #products-page-custom, #product-detail-page, #certifications-page, #contact-page, #footer-section-custom) :is(svg, [class*="icon"]) {
+  color: var(--site-icon) !important;
+}
+
+html :is(#home-page-custom, #about-page, #products-page-custom, #product-detail-page, #certifications-page, #contact-page) :is(input, select, textarea) {
+  color: var(--site-input-text) !important;
+  background: var(--site-input) !important;
+  background-color: var(--site-input) !important;
+  border-color: var(--site-border) !important;
+}
+
+html :is(#home-page-custom, #about-page, #products-page-custom, #product-detail-page, #certifications-page, #contact-page) :is(input, select, textarea):focus {
+  border-color: var(--site-focus) !important;
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--site-focus), transparent 80%) !important;
+}
+
+html :is(#home-page-custom, #about-page, #products-page-custom, #product-detail-page, #certifications-page, #contact-page) :is(button[type="submit"], a[class*="bg-gradient"], button[class*="bg-gradient"], a[class*="px-"], a[class*="p-3"], .tab-active, .product-index-badge),
+html #main-navbar :is(#cta-quote-nav, #cta-quote-mobile) {
+  background: var(--site-button) !important;
+  background-color: var(--site-button) !important;
+  border-color: var(--site-button) !important;
+  color: var(--site-button-text) !important;
+}
+
+html :is(#home-page-custom, #about-page, #products-page-custom, #product-detail-page, #certifications-page, #contact-page) button {
+  border-color: var(--site-button) !important;
+}
+
+html :is(#home-page-custom, #about-page, #products-page-custom, #product-detail-page, #certifications-page, #contact-page) button[class*="bg-"] {
+  background: var(--site-button) !important;
+  background-color: var(--site-button) !important;
+  color: var(--site-button-text) !important;
+}
+
+html :is(#home-page-custom, #about-page, #products-page-custom, #product-detail-page, #certifications-page, #contact-page) :is(button, a[class*="px-"], a[class*="p-3"]):hover {
+  background: var(--site-button-hover) !important;
+  background-color: var(--site-button-hover) !important;
+  border-color: var(--site-button-hover) !important;
+}
+
+html :is(#home-page-custom, #about-page, #products-page-custom, #product-detail-page, #certifications-page, #contact-page) :is(button[type="submit"], a[class*="bg-gradient"], button[class*="bg-gradient"], a[class*="px-"], a[class*="p-3"], .tab-active, .product-index-badge) span,
+html :is(#home-page-custom, #about-page, #products-page-custom, #product-detail-page, #certifications-page, #contact-page) button[class*="bg-"] span,
+html #main-navbar :is(#cta-quote-nav, #cta-quote-mobile) span {
+  color: var(--site-button-text) !important;
+}
+
+html :is(#home-page-custom, #about-page, #products-page-custom, #product-detail-page, #certifications-page, #contact-page) :is(.product-index-badge, .material-tag, [class*="rounded-full"][class*="uppercase"]) {
+  background: var(--site-badge) !important;
+  background-color: var(--site-badge) !important;
+  color: var(--site-badge-text) !important;
+}
+
+html :is(#home-page-custom, #about-page, #products-page-custom, #product-detail-page, #certifications-page, #contact-page) :is(thead, thead tr) {
+  background: var(--site-table-header) !important;
+  background-color: var(--site-table-header) !important;
+}
+
+html #footer-section-custom :is(p, li, td, label, span, a) { color: var(--site-footer-text) !important; }
+html #footer-section-custom :is(h1, h2, h3, h4, h5, h6) { color: var(--site-footer-heading) !important; }
+
+html :is(#mobile-drawer-overlay, #cert-modal-overlay) {
+  background: color-mix(in srgb, var(--site-overlay), transparent 35%) !important;
+}
+
+html :is(#home-page-custom, #about-page, #products-page-custom, #product-detail-page, #certifications-page, #contact-page) [class*="bg-gradient-to-t"][class*="absolute"] {
+  background-image: linear-gradient(to top, color-mix(in srgb, var(--site-overlay), transparent 18%), transparent) !important;
+}
+
+html :is(#home-page-custom, #about-page, #products-page-custom, #product-detail-page, #certifications-page, #contact-page) [class*="bg-clip-text"] {
+  background-image: linear-gradient(135deg, var(--site-heading), var(--site-accent)) !important;
+}
+
+html :is(#home-page-custom, #about-page, #products-page-custom, #product-detail-page, #certifications-page, #contact-page) [class*="text-emerald"],
+html :is(#home-page-custom, #about-page, #products-page-custom, #product-detail-page, #certifications-page, #contact-page) [class*="text-green"] { color: var(--site-success) !important; }
+
+html :is(#home-page-custom, #about-page, #products-page-custom, #product-detail-page, #certifications-page, #contact-page) [class*="text-amber"],
+html :is(#home-page-custom, #about-page, #products-page-custom, #product-detail-page, #certifications-page, #contact-page) [class*="text-yellow"] { color: var(--site-warning) !important; }
+
+html :is(#home-page-custom, #about-page, #products-page-custom, #product-detail-page, #certifications-page, #contact-page) [class*="text-rose"],
+html :is(#home-page-custom, #about-page, #products-page-custom, #product-detail-page, #certifications-page, #contact-page) [class*="text-red"] { color: var(--site-error) !important; }
+
+html #site-loader { background: var(--site-loader) !important; color: var(--site-loader-accent) !important; }
+html #site-loader :is(span, p, h1, h2, h3) { color: var(--site-loader-accent) !important; }
+html #site-loader [class*="bg-gradient"] { background: var(--site-loader-accent) !important; }
+html #site-loader [class*="border-t-"] { border-top-color: var(--site-loader-accent) !important; }
+html #site-loader [class*="border-b-"] { border-bottom-color: var(--site-loader-accent) !important; }
+html #site-loader [class*="border-l-"] { border-left-color: var(--site-loader-accent) !important; }
+html #site-loader [class*="border-r-"] { border-right-color: var(--site-loader-accent) !important; }
+
+html ::selection {
+  background: var(--site-accent);
+  color: var(--site-button-text);
+}
+
+html #footer-section-custom :is(a:hover, button:hover),
+html :is(#home-page-custom, #about-page, #products-page-custom, #product-detail-page, #certifications-page, #contact-page) [class*="text-brand-electric"] {
+  color: var(--site-accent) !important;
+}
+
