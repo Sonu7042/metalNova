@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { API_BASE } from '../theme';
 
 export default function Contact() {
   const [formData, setFormData] = useState({
@@ -39,7 +40,7 @@ export default function Contact() {
     };
 
     try {
-      const response = await fetch('https://metal-nova-cyan.vercel.app/api/inquiries', {
+      const response = await fetch(`${API_BASE}/inquiries`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)

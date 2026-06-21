@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-const API_BASE = 'https://metal-nova-cyan.vercel.app/api';
+import { API_BASE } from '../theme';
 
 const INITIAL_PRODUCTS = [
   {

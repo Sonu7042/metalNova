@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams, useLocation } from 'react-router-dom';
+import { API_BASE } from '../theme';
 
 export default function Products() {
   const navigate = useNavigate();
@@ -129,7 +130,7 @@ export default function Products() {
   useEffect(() => {
     const fetchLiveCatalog = async () => {
       try {
-        const response = await fetch('https://metal-nova-cyan.vercel.app/api/products');
+        const response = await fetch(`${API_BASE}/products`);
         if (response.ok) {
           const liveProds = await response.json();
           if (liveProds && liveProds.length > 0) {
