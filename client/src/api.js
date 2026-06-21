@@ -1,11 +1,12 @@
 const LOCAL_API = 'http://localhost:5000/api';
 const PRODUCTION_API = 'https://metal-nova-u2ah.vercel.app/api';
 const configuredApi = import.meta.env.VITE_API_BASE_URL?.replace(/\/$/, '');
-const configuredApiIsFrontend = configuredApi?.includes('metal-nova-cyan.vercel.app');
+const invalidProductionHosts = ['metal-nova-cyan.vercel.app', 'metal-nova-9fae.vercel.app'];
+const configuredApiIsInvalid = invalidProductionHosts.some((host) => configuredApi?.includes(host));
 
 export const API_BASE = import.meta.env.DEV
   ? (configuredApi || LOCAL_API)
-  : (configuredApi && !configuredApiIsFrontend ? configuredApi : PRODUCTION_API);
+  : (configuredApi && !configuredApiIsInvalid ? configuredApi : PRODUCTION_API);
 
 export const apiUrl = (path = '') => `${API_BASE}/${path.replace(/^\//, '')}`;
 
