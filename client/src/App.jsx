@@ -11,15 +11,15 @@ import Contact from './pages/Contact';
 import Admin from './pages/Admin';
 import Loader from './components/Loader';
 import './App.css';
-import { API_BASE, applyTheme, loadStoredTheme, readThemeResponse, storeTheme } from './theme';
+import { applyTheme, loadStoredTheme, storeTheme } from './theme';
+import { getTheme } from './services/themeService';
 
 function App() {
   const [showLoader, setShowLoader] = useState(true);
 
   useEffect(() => {
     applyTheme(loadStoredTheme());
-    fetch(`${API_BASE}/theme`, { cache: 'no-store' })
-      .then(readThemeResponse)
+    getTheme()
       .then(storeTheme)
       .catch(() => {});
   }, []);

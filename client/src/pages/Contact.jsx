@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { API_BASE } from '../theme';
+import { createInquiry } from '../services/inquiryService';
 
 export default function Contact() {
   const [formData, setFormData] = useState({
@@ -40,14 +40,8 @@ export default function Contact() {
     };
 
     try {
-      const response = await fetch(`${API_BASE}/inquiries`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
-      });
-
-      if (response.ok) {
-        const text = `*New RFQ Inquiry - Metalnova*\n` +
+      await createInquiry(payload);
+      const text = `*New RFQ Inquiry - Metalnova*\n` +
           `---------------------------------\n` +
           `*Name:* ${formData.fullName}\n` +
           `*Company:* ${formData.companyName || 'N/A'}\n` +
@@ -68,7 +62,7 @@ export default function Contact() {
 
         setIsSubmitting(false);
         setFormSubmitted(true);
-        setFormData({
+      setFormData({
           fullName: '',
           companyName: '',
           email: '',
@@ -79,11 +73,7 @@ export default function Contact() {
           quantity: '',
           specifications: '',
           industry: ''
-        });
-      } else {
-        alert('Failed to submit inquiry to server. Please try again.');
-        setIsSubmitting(false);
-      }
+      });
     } catch (error) {
       console.error('Submission failed, falling back to direct WhatsApp redirect', error);
       const text = `*New RFQ Inquiry (Direct Offline) - Metalnova*\n` +

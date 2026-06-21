@@ -1,24 +1,8 @@
 require('dotenv').config();
-const express = require('express');
-const cors = require('cors');
-const mongoose = require('mongoose');
-const routes = require('./src/routes');
+const app = require('./src/app');
+const { connectDatabase } = require('./src/config/database');
 const { Category, Product } = require('./src/models');
-
-const app = express();
 const PORT = process.env.PORT || 5000;
-
-// Middleware
-app.use(cors());
-app.use(express.json());
-
-// Routes mapping
-app.use('/api', routes);
-
-// Base route
-app.get('/', (req, res) => {
-  res.send('Metalnova API Server is running...');
-});
 
 // Seed Data Function
 async function seedDatabase() {
@@ -168,9 +152,7 @@ async function seedDatabase() {
   }
 }
 
-// Connect to MongoDB Atlas
-mongoose
-  .connect(process.env.MONGODBURI)
+connectDatabase()
   .then(async () => {
     console.log('Successfully connected to MongoDB Atlas');
     await seedDatabase();

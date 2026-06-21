@@ -1,5 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { API_BASE, DEFAULT_THEME, loadStoredTheme, readThemeResponse, storeTheme } from '../theme';
+import { DEFAULT_THEME, loadStoredTheme, storeTheme } from '../theme';
+import { getCategories, getProducts } from '../services/catalogService';
+import { archiveInquiry, getInquiries } from '../services/inquiryService';
+import { getTheme, updateTheme } from '../services/themeService';
+import {
+  archiveCategory, archiveProduct, createCategory, createProduct,
+  updateCategory, updateProduct, uploadProductImage
+} from '../services/adminService';
 
 export default function Admin() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -74,22 +81,12 @@ export default function Admin() {
     triggerNotification('Uploading image to Cloudinary...', 'success');
 
     try {
-      const response = await fetch(`${API_BASE}/upload`, {
-        method: 'POST',
-        body: formDataObj
-      });
-
-      if (response.ok) {
-        const data = await response.json();
-        if (data.imageUrl) {
+      const data = await uploadProductImage(formDataObj);
+      if (data.imageUrl) {
           setProductForm(prev => ({ ...prev, imageUrl: data.imageUrl }));
           triggerNotification('Image uploaded successfully!');
-        } else {
-          triggerNotification('Could not extract uploaded URL.', 'error');
-        }
       } else {
-        const errData = await response.json();
-        triggerNotification(errData.error || 'Failed to upload image.', 'error');
+        triggerNotification('Could not extract uploaded URL.', 'error');
       }
     } catch (err) {
       console.error('Image upload failed', err);
@@ -102,26 +99,13 @@ export default function Admin() {
   // Fetch data
   const fetchData = async () => {
     try {
-      const catRes = await fetch(`${API_BASE}/categories`);
-      if (catRes.ok) {
-        const cats = await catRes.json();
-        setCategories(cats);
-      }
-
-      const prodRes = await fetch(`${API_BASE}/products`);
-      if (prodRes.ok) {
-        const prods = await prodRes.json();
-        setProducts(prods);
-      }
-
-      const inqRes = await fetch(`${API_BASE}/inquiries`);
-      if (inqRes.ok) {
-        const inqs = await inqRes.json();
-        setInquiries(inqs);
-      }
-
-      const themeRes = await fetch(`${API_BASE}/theme`, { cache: 'no-store' });
-      const theme = await readThemeResponse(themeRes);
+      const [cats, prods, inqs] = await Promise.all([
+        getCategories(), getProducts(), getInquiries()
+      ]);
+      setCategories(cats);
+      setProducts(prods);
+      setInquiries(inqs);
+      const theme = await getTheme();
       setThemeForm({ ...DEFAULT_THEME, ...theme });
       storeTheme(theme);
     } catch (err) {
@@ -141,13 +125,7 @@ export default function Admin() {
     setIsSavingTheme(true);
     storeTheme(themeForm);
     try {
-      const response = await fetch(`${API_BASE}/theme`, {
-        method: 'PUT',
-        cache: 'no-store',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(themeForm)
-      });
-      const savedTheme = await readThemeResponse(response);
+      const savedTheme = await updateTheme(themeForm);
       setThemeForm({ ...DEFAULT_THEME, ...savedTheme });
       storeTheme(savedTheme);
       triggerNotification('Website colors published successfully!');
@@ -172,18 +150,10 @@ export default function Admin() {
     if (!newCatName.trim()) return;
 
     try {
-      const res = await fetch(`${API_BASE}/categories`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name: newCatName })
-      });
-      if (res.ok) {
-        setNewCatName('');
-        triggerNotification('Category created successfully!');
-        fetchData();
-      } else {
-        triggerNotification('Failed to create category.', 'error');
-      }
+      await createCategory(newCatName);
+      setNewCatName('');
+      triggerNotification('Category created successfully!');
+      fetchData();
     } catch (err) {
       triggerNotification('Server communication failure.', 'error');
     }
@@ -194,17 +164,11 @@ export default function Admin() {
     if (!editCatName.trim() || !editingCat) return;
 
     try {
-      const res = await fetch(`${API_BASE}/categories/${editingCat._id}`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name: editCatName })
-      });
-      if (res.ok) {
-        setEditingCat(null);
-        setEditCatName('');
-        triggerNotification('Category updated successfully!');
-        fetchData();
-      }
+      await updateCategory(editingCat._id, { name: editCatName });
+      setEditingCat(null);
+      setEditCatName('');
+      triggerNotification('Category updated successfully!');
+      fetchData();
     } catch (err) {
       triggerNotification('Server communication failure.', 'error');
     }
@@ -213,11 +177,9 @@ export default function Admin() {
   const handleArchiveCategory = async (id) => {
     if (!window.confirm('Are you sure you want to archive this category?')) return;
     try {
-      const res = await fetch(`${API_BASE}/categories/${id}`, { method: 'DELETE' });
-      if (res.ok) {
-        triggerNotification('Category archived.');
-        fetchData();
-      }
+      await archiveCategory(id);
+      triggerNotification('Category archived.');
+      fetchData();
     } catch (err) {
       triggerNotification('Server communication failure.', 'error');
     }
@@ -250,19 +212,11 @@ export default function Admin() {
     }
 
     const isEdit = !!productForm.id;
-    const url = isEdit ? `${API_BASE}/products/${productForm.id}` : `${API_BASE}/products`;
-    const method = isEdit ? 'PUT' : 'POST';
-
     try {
-      const res = await fetch(url, {
-        method,
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(productForm)
-      });
-
-      if (res.ok) {
-        triggerNotification(isEdit ? 'Product updated successfully!' : 'Product created successfully!');
-        setProductForm({
+      if (isEdit) await updateProduct(productForm.id, productForm);
+      else await createProduct(productForm);
+      triggerNotification(isEdit ? 'Product updated successfully!' : 'Product created successfully!');
+      setProductForm({
           id: null,
           categoryId: '',
           name: '',
@@ -273,11 +227,8 @@ export default function Admin() {
           applications: '',
           imageUrl: '',
           specs: []
-        });
-        fetchData();
-      } else {
-        triggerNotification('Error saving product.', 'error');
-      }
+      });
+      fetchData();
     } catch (err) {
       triggerNotification('Server communication failure.', 'error');
     }
@@ -303,11 +254,9 @@ export default function Admin() {
   const handleArchiveProduct = async (id) => {
     if (!window.confirm('Are you sure you want to archive this product profile?')) return;
     try {
-      const res = await fetch(`${API_BASE}/products/${id}`, { method: 'DELETE' });
-      if (res.ok) {
-        triggerNotification('Product profile archived successfully.');
-        fetchData();
-      }
+      await archiveProduct(id);
+      triggerNotification('Product profile archived successfully.');
+      fetchData();
     } catch (err) {
       triggerNotification('Server communication failure.', 'error');
     }
@@ -318,11 +267,9 @@ export default function Admin() {
   const handleArchiveInquiry = async (id) => {
     if (!window.confirm('Archive this customer lead?')) return;
     try {
-      const res = await fetch(`${API_BASE}/inquiries/${id}`, { method: 'DELETE' });
-      if (res.ok) {
-        triggerNotification('Inquiry archived.');
-        fetchData();
-      }
+      await archiveInquiry(id);
+      triggerNotification('Inquiry archived.');
+      fetchData();
     } catch (err) {
       triggerNotification('Server communication failure.', 'error');
     }

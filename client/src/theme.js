@@ -1,27 +1,3 @@
-const PRODUCTION_API = 'https://metal-nova-9fae.vercel.app/api';
-const configuredApi = import.meta.env.VITE_API_BASE_URL?.replace(/\/$/, '');
-const configuredApiIsFrontend = configuredApi?.includes('metal-nova-cyan.vercel.app');
-
-export const API_BASE = import.meta.env.DEV
-  ? (configuredApi || 'http://localhost:5000/api')
-  : (configuredApi && !configuredApiIsFrontend ? configuredApi : PRODUCTION_API);
-
-export const readThemeResponse = async (response) => {
-  const contentType = response.headers.get('content-type') || '';
-  if (!contentType.includes('application/json')) {
-    if (response.status === 404) {
-      throw new Error('The backend /api/theme route is not deployed yet. Deploy the latest server project.');
-    }
-    throw new Error('Theme API returned a web page instead of JSON. Check VITE_API_BASE_URL.');
-  }
-
-  const data = await response.json();
-  if (!response.ok) {
-    throw new Error(data.error || `Theme API failed with status ${response.status}.`);
-  }
-  return data;
-};
-
 export const DEFAULT_THEME = {
   sidebarColor: '#ffffff', navigationTextColor: '#5c3321', navigationHoverColor: '#8c4b2b',
   headerActiveColor: '#c87d55', headerCtaColor: '#c87d55', headerCtaHoverColor: '#8c4b2b', headerCtaTextColor: '#ffffff',

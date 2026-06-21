@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams, useLocation } from 'react-router-dom';
-import { API_BASE } from '../theme';
+import { getProducts } from '../services/catalogService';
 
 export default function Products() {
   const navigate = useNavigate();
@@ -130,10 +130,8 @@ export default function Products() {
   useEffect(() => {
     const fetchLiveCatalog = async () => {
       try {
-        const response = await fetch(`${API_BASE}/products`);
-        if (response.ok) {
-          const liveProds = await response.json();
-          if (liveProds && liveProds.length > 0) {
+        const liveProds = await getProducts();
+        if (liveProds && liveProds.length > 0) {
             setProducts(liveProds);
               
             // Sync active tab if initial selection is not present in fetched list
@@ -141,7 +139,6 @@ export default function Products() {
             if (!found) {
               setActiveTab(liveProds[0]._id || liveProds[0].id);
             }
-          }
         }
       } catch (err) {
         console.warn('Backend API offline, using pre-loaded default specifications catalog.');

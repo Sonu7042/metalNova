@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { API_BASE } from '../theme';
+import { getProducts } from '../services/catalogService';
+import { createInquiry } from '../services/inquiryService';
 
 const INITIAL_PRODUCTS = [
   {
@@ -132,12 +133,9 @@ export default function ProductDetail() {
   useEffect(() => {
     const fetchCatalog = async () => {
       try {
-        const response = await fetch(`${API_BASE}/products`);
-        if (response.ok) {
-          const data = await response.json();
-          if (data && data.length > 0) {
+        const data = await getProducts();
+        if (data && data.length > 0) {
             setProducts(data);
-          }
         }
       } catch (err) {
         console.warn('API connection offline, utilizing client preloaded static specifications.');
@@ -171,18 +169,8 @@ export default function ProductDetail() {
     };
 
     try {
-      const response = await fetch(`${API_BASE}/inquiries`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
-      });
-
-      if (response.ok) {
-        triggerWhatsAppRedirect(payload);
-      } else {
-        alert('Failed to save inquiry on server. Redirecting directly to WhatsApp.');
-        triggerWhatsAppRedirect(payload);
-      }
+      await createInquiry(payload);
+      triggerWhatsAppRedirect(payload);
     } catch (err) {
       console.warn('Server offline, initiating direct WhatsApp message.');
       triggerWhatsAppRedirect(payload);

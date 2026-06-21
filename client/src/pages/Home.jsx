@@ -2,7 +2,8 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import metalVideoPoster from '../assets/metalvideo.png';
 import heroVideoSource from '../assets/herovideo.mp4';
-import { API_BASE } from '../theme';
+import { getProducts } from '../services/catalogService';
+import { createInquiry } from '../services/inquiryService';
 
 export default function Home() {
   const navigate = useNavigate();
@@ -75,10 +76,8 @@ export default function Home() {
   useEffect(() => {
     const fetchHomeProducts = async () => {
       try {
-        const response = await fetch(`${API_BASE}/products`);
-        if (response.ok) {
-          const data = await response.json();
-          if (data && data.length > 0) {
+        const data = await getProducts();
+        if (data && data.length > 0) {
             const mapped = data.map(prod => ({
               id: prod._id || prod.id,
               title: prod.name,
@@ -86,7 +85,6 @@ export default function Home() {
               img: prod.imageUrl
             }));
             setProducts(mapped);
-          }
         }
       } catch (err) {
         console.warn('Backend API offline, using pre-loaded default specifications catalog.');
@@ -118,14 +116,8 @@ export default function Home() {
     };
 
     try {
-      const response = await fetch(`${API_BASE}/inquiries`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
-      });
-
-      if (response.ok) {
-        const text = `*New RFQ Inquiry - Metalnova*\n` +
+      await createInquiry(payload);
+      const text = `*New RFQ Inquiry - Metalnova*\n` +
           `---------------------------------\n` +
           `*Name:* ${formData.fullName}\n` +
           `*Company:* ${formData.companyName || 'N/A'}\n` +
@@ -146,7 +138,7 @@ export default function Home() {
 
         setIsSubmitting(false);
         setFormSubmitted(true);
-        setFormData({
+      setFormData({
           fullName: '',
           companyName: '',
           email: '',
@@ -157,11 +149,7 @@ export default function Home() {
           quantity: '',
           specifications: '',
           industry: ''
-        });
-      } else {
-        alert('Failed to submit inquiry to server. Please try again.');
-        setIsSubmitting(false);
-      }
+      });
     } catch (error) {
       console.error('Submission failed, falling back to direct WhatsApp redirect', error);
       const text = `*New RFQ Inquiry (Direct Offline) - Metalnova*\n` +
