@@ -3,8 +3,21 @@ const configuredApi = import.meta.env.VITE_API_BASE_URL?.replace(/\/$/, '');
 export const API_BASE = configuredApi || (
   import.meta.env.DEV
     ? 'http://localhost:5000/api'
-    : 'https://metal-nova-cyan.vercel.app/api'
+    : 'https://metal-nova-9fae.vercel.app/api'
 );
+
+export const readThemeResponse = async (response) => {
+  const contentType = response.headers.get('content-type') || '';
+  if (!contentType.includes('application/json')) {
+    throw new Error('Theme API returned a web page instead of JSON. Check VITE_API_BASE_URL.');
+  }
+
+  const data = await response.json();
+  if (!response.ok) {
+    throw new Error(data.error || `Theme API failed with status ${response.status}.`);
+  }
+  return data;
+};
 
 export const DEFAULT_THEME = {
   sidebarColor: '#ffffff', navigationTextColor: '#5c3321', navigationHoverColor: '#8c4b2b',

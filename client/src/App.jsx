@@ -11,7 +11,7 @@ import Contact from './pages/Contact';
 import Admin from './pages/Admin';
 import Loader from './components/Loader';
 import './App.css';
-import { API_BASE, applyTheme, loadStoredTheme, storeTheme } from './theme';
+import { API_BASE, applyTheme, loadStoredTheme, readThemeResponse, storeTheme } from './theme';
 
 function App() {
   const [showLoader, setShowLoader] = useState(true);
@@ -19,7 +19,7 @@ function App() {
   useEffect(() => {
     applyTheme(loadStoredTheme());
     fetch(`${API_BASE}/theme`, { cache: 'no-store' })
-      .then((response) => response.ok ? response.json() : Promise.reject())
+      .then(readThemeResponse)
       .then(storeTheme)
       .catch(() => {});
   }, []);

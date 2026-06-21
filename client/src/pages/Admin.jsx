@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { API_BASE, DEFAULT_THEME, loadStoredTheme, storeTheme } from '../theme';
+import { API_BASE, DEFAULT_THEME, loadStoredTheme, readThemeResponse, storeTheme } from '../theme';
 
 export default function Admin() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -121,11 +121,9 @@ export default function Admin() {
       }
 
       const themeRes = await fetch(`${API_BASE}/theme`, { cache: 'no-store' });
-      if (themeRes.ok) {
-        const theme = await themeRes.json();
-        setThemeForm({ ...DEFAULT_THEME, ...theme });
-        storeTheme(theme);
-      }
+      const theme = await readThemeResponse(themeRes);
+      setThemeForm({ ...DEFAULT_THEME, ...theme });
+      storeTheme(theme);
     } catch (err) {
       console.error('API Fetch failed', err);
       triggerNotification('Could not connect to API server. Operating in offline demo mode.', 'error');
@@ -149,13 +147,13 @@ export default function Admin() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(themeForm)
       });
-      if (!response.ok) throw new Error('Theme API rejected the update.');
-      const savedTheme = await response.json();
+      const savedTheme = await readThemeResponse(response);
       setThemeForm({ ...DEFAULT_THEME, ...savedTheme });
       storeTheme(savedTheme);
       triggerNotification('Website colors published successfully!');
-    } catch {
-      triggerNotification('Colors previewed locally, but could not be published to the server.', 'error');
+    } catch (error) {
+      console.error('Theme publish failed:', error);
+      triggerNotification(`Publish failed: ${error.message}`, 'error');
     } finally {
       setIsSavingTheme(false);
     }
