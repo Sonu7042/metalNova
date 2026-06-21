@@ -1,5 +1,5 @@
 const LOCAL_API = 'http://localhost:5000/api';
-const PRODUCTION_API = 'https://metal-nova-9fae.vercel.app/api';
+const PRODUCTION_API = 'https://metal-nova-u2ah.vercel.app/api';
 const configuredApi = import.meta.env.VITE_API_BASE_URL?.replace(/\/$/, '');
 const configuredApiIsFrontend = configuredApi?.includes('metal-nova-cyan.vercel.app');
 
