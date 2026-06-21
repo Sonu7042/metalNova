@@ -5,6 +5,7 @@ const { upload, uploadProductImage } = require('./upload');
 
 router.get('/theme', controllers.getTheme);
 router.put('/theme', controllers.updateTheme);
+router.post('/theme', controllers.updateTheme);
 
 // Categories API
 router.get('/categories', controllers.getCategories);

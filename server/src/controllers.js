@@ -22,6 +22,11 @@ const isHexColor = (value) => typeof value === 'string' && /^#[0-9a-f]{6}$/i.tes
 const headerFonts = ['Outfit', 'Arial', 'Georgia', 'Trebuchet MS', 'Times New Roman'];
 const headerWeights = ['400', '500', '600', '700', '800'];
 const headerSizes = ['13', '14', '15', '16', '17', '18', '20'];
+const colorFields = Object.keys(defaultTheme).filter((field) => field.endsWith('Color'));
+
+const publicTheme = (theme = {}) => Object.fromEntries(
+  Object.keys(defaultTheme).map((field) => [field, theme[field] || defaultTheme[field]])
+);
 
 exports.getTheme = async (req, res) => {
   try {
@@ -36,31 +41,58 @@ exports.getTheme = async (req, res) => {
         { new: true }
       ).lean();
     }
-    res.set('Cache-Control', 'no-store');
-    res.json(theme ? { ...defaultTheme, ...theme } : defaultTheme);
+    res.set({
+      'Cache-Control': 'no-store, no-cache, must-revalidate',
+      'X-Theme-Version': '8'
+    });
+    res.json(publicTheme(theme));
   } catch (error) { res.status(500).json({ error: error.message }); }
 };
 
 exports.updateTheme = async (req, res) => {
   try {
-    const updates = {};
-    const colorFields = Object.keys(defaultTheme).filter((field) => field.endsWith('Color'));
-    colorFields.forEach((field) => {
-      if (isHexColor(req.body[field])) updates[field] = req.body[field];
-    });
-    if (headerFonts.includes(req.body.headerFontFamily)) updates.headerFontFamily = req.body.headerFontFamily;
-    if (headerWeights.includes(req.body.headerFontWeight)) updates.headerFontWeight = req.body.headerFontWeight;
-    if (headerSizes.includes(req.body.headerFontSize)) updates.headerFontSize = req.body.headerFontSize;
-    if (Object.keys(updates).length !== colorFields.length + 3) {
-      return res.status(400).json({ error: 'Theme colors or header font settings are invalid.' });
+    if (!req.body || typeof req.body !== 'object' || Array.isArray(req.body)) {
+      return res.status(400).json({ error: 'A JSON theme object is required.' });
     }
+
+    const savedTheme = await ThemeSettings.findOne({ key: 'website' }).lean();
+    const updates = publicTheme(savedTheme);
+    const invalidFields = [];
+
+    colorFields.forEach((field) => {
+      if (req.body[field] === undefined) return;
+      if (isHexColor(req.body[field])) updates[field] = req.body[field];
+      else invalidFields.push(field);
+    });
+
+    const enumFields = [
+      ['headerFontFamily', headerFonts],
+      ['headerFontWeight', headerWeights],
+      ['headerFontSize', headerSizes]
+    ];
+    enumFields.forEach(([field, allowedValues]) => {
+      if (req.body[field] === undefined) return;
+      if (allowedValues.includes(String(req.body[field]))) updates[field] = String(req.body[field]);
+      else invalidFields.push(field);
+    });
+
+    if (invalidFields.length > 0) {
+      return res.status(400).json({
+        error: `Invalid theme fields: ${invalidFields.join(', ')}`,
+        invalidFields
+      });
+    }
+
     const theme = await ThemeSettings.findOneAndUpdate(
       { key: 'website' },
       { $set: { ...updates, themeVersion: 8 }, $setOnInsert: { key: 'website' } },
       { new: true, upsert: true, runValidators: true }
     );
-    res.set('Cache-Control', 'no-store');
-    res.json(theme);
+    res.set({
+      'Cache-Control': 'no-store, no-cache, must-revalidate',
+      'X-Theme-Version': '8'
+    });
+    res.status(200).json(publicTheme(theme.toObject()));
   } catch (error) { res.status(500).json({ error: error.message }); }
 };
 
